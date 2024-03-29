@@ -35,14 +35,6 @@ const loadUploadForm = () => {
 
 const loadPermission = async () => {
   const splitPermissionListResult = await a.lib.common.input.fetchSplitPermissionList(a.setting.browserServerSetting.getValue('apiEndpoint'))
-  a.output.showEditor(argNamed({
-    param: { splitPermissionListResult },
-  }))
-
-  a.output.showBackupEmailAddressForm(argNamed({
-    param: { splitPermissionListResult },
-  }))
-
   a.output.showUploadForm(argNamed({
     param: { splitPermissionListResult },
   }))

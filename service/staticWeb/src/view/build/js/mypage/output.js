@@ -2,7 +2,7 @@
 
 /* request */
 export const getUploadFile = ({ apiEndpoint, postFormRequest }) => {
-  const url = `${apiEndpoint}/form/save`
+  const url = `${apiEndpoint}/form/upload`
   return () => {
     const profileImageInputElm = document.querySelector('#profileImageInput')
     const file = profileImageInputElm.files[0]
@@ -33,7 +33,7 @@ export const showMessage = ({ messageResult }) => {
 
 export const showUploadForm = ({ splitPermissionListResult }) => {
   const { splitPermissionList, clientId } = splitPermissionListResult.result
-  if (splitPermissionList.optional[`rw:${clientId}:tesseract`]) {
+  if (splitPermissionList.required[`rw:${clientId}:tesseract`]) {
     document.querySelector('#uploadContainer').classList.remove('hidden')
     document.querySelector('#uploadedImgContainer').classList.remove('hidden')
   } else {
