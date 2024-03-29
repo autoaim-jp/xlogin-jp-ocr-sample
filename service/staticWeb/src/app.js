@@ -52,7 +52,7 @@ const _getActionRouter = () => {
     core: [a.core.handleUploadFile, a.core.createResponse],
     mod: [multer, FormData, Readable],
   }))
-  expressRouter.post(`${setting.browserServerSetting.getValue('apiEndpoint')}/form/save`, uploadFileHandler)
+  expressRouter.post(`${setting.browserServerSetting.getValue('apiEndpoint')}/form/upload`, uploadFileHandler)
 
   return expressRouter
 }

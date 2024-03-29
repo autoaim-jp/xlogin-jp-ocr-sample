@@ -45,10 +45,8 @@ const handleUploadFile = async ({
   })
   logger.debug('handleUploadFile', { uploadResult })
 
-  const filePath = mod.setting.getValue('user.PROFILE_FILE_PATH_WITHOUT_EXT')
+  const filePath = mod.setting.getValue('user.UPLOAD_IMG_FILE_PATH')
   const formData = new FormData()
-  formData.append('filePath', filePath)
-  formData.append('owner', mod.setting.getValue('env.CLIENT_ID'))
   formData.append('file', Readable.from(req.file.buffer), { filename: filePath })
 
   const fileAddResponse = await mod.output.fileAddRequest(argNamed({
