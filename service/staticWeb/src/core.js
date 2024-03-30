@@ -45,7 +45,7 @@ const handleUploadFile = async ({
   })
   logger.debug('handleUploadFile', { uploadResult })
 
-  if(!req.file) {
+  if (!req.file) {
     return { error: 'no image' }
   }
 

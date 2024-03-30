@@ -1,5 +1,5 @@
 /* mypage/core.js */
-let requestIdList = {}
+const requestIdList = {}
 
 export const registerRequestId = ({ requestId }) => {
   if (!requestId) {

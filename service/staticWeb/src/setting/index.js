@@ -12,7 +12,7 @@ setting.key = {}
 setting.key.FILE_UPLOAD = 'file'
 
 setting.user = {}
-setting.user.UPLOAD_IMG_FILE_PATH= '/upload.img'
+setting.user.UPLOAD_IMG_FILE_PATH = '/upload.img'
 
 setting.xdevkitSetting = xdevkitSetting
 setting.browserServerSetting = browserServerSetting
