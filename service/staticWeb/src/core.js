@@ -45,6 +45,10 @@ const handleUploadFile = async ({
   })
   logger.debug('handleUploadFile', { uploadResult })
 
+  if(!req.file) {
+    return { error: 'no image' }
+  }
+
   const filePath = mod.setting.getValue('user.UPLOAD_IMG_FILE_PATH')
   const formData = new FormData()
   formData.append('file', Readable.from(req.file.buffer), { filename: filePath })

@@ -50,7 +50,7 @@ const startResponseLoader = async () => {
       param: { fetchResponseList },
       output: [a.output.showOcrResult],
     }))
-  }, 5 * 1000)
+  }, 2 * 1000)
 }
 
 

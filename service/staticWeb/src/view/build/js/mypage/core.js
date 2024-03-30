@@ -2,6 +2,9 @@
 let requestIdList = {}
 
 export const registerRequestId = ({ requestId }) => {
+  if (!requestId) {
+    return
+  }
   requestIdList[requestId] = true
 }
 
