@@ -54,11 +54,37 @@ const handleUploadFile = async ({
     xdevkitSetting: mod.setting.xdevkitSetting.getList('api.API_VERSION', 'env.API_SERVER_ORIGIN', 'env.CLIENT_ID'),
     lib: [mod.lib.postFormRequest],
   }))
-  logger.debug('handleUploadFile', { fileAddResponse })
+  const fileAddResponseJson = JSON.parse(fileAddResponse)
+  logger.debug('handleUploadFile', { fileAddResponseJson })
 
-  const handleResult = { response: { status: mod.setting.browserServerSetting.getValue('statusList.OK') } }
+  const { requestId } = fileAddResponseJson.result
+  const handleResult = { response: { status: mod.setting.browserServerSetting.getValue('statusList.OK'), requestId } }
   return handleResult
 }
+
+const handleLookupResponseList = async ({ accessToken, requestIdListStr }) => {
+  const responseListResponse = await mod.input.lookupResponseListRequest(argNamed({
+    param: { accessToken, requestIdListStr },
+    xdevkitSetting: mod.setting.xdevkitSetting.getList('api.API_VERSION', 'env.API_SERVER_ORIGIN', 'env.CLIENT_ID'),
+    lib: [mod.lib.getRequest],
+  }))
+
+  console.log({ responseListResponse })
+
+  if (!responseListResponse || !responseListResponse.data) {
+    const status = mod.setting.browserServerSetting.getValue('statusList.INVALID_SESSION')
+    const result = {}
+    const handleResult = { response: { status, result } }
+    return handleResult
+  }
+
+  const { result } = responseListResponse.data
+  const status = mod.setting.browserServerSetting.getValue('statusList.OK')
+
+  const handleResult = { response: { status, result } }
+  return handleResult
+}
+
 
 const createResponse = ({ req, res, handleResult }) => {
   logger.debug('createResponse', { 'req.url': req.url, handleResult })
@@ -104,6 +130,7 @@ export default {
   handleSplitPermissionList,
 
   handleUploadFile,
+  handleLookupResponseList,
 
   createResponse,
   handleInvalidSession,

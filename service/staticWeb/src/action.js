@@ -27,8 +27,25 @@ const getHandlerUploadFile = ({
   }
 }
 
+const getHandlerLookupResponseList = ({ handleInvalidSession, handleLookupResponseList, createResponse }) => {
+  return async (req, res) => {
+    if (handleInvalidSession({ req, res })) {
+      return
+    }
+
+    const { accessToken } = req.session.auth
+    const { requestIdListStr } = req.query
+
+    const handleResult = await handleLookupResponseList({ accessToken, requestIdListStr })
+
+    createResponse({ req, res, handleResult })
+  }
+}
+
+
 export default {
   getHandlerSplitPermissionList,
   getHandlerUploadFile,
+  getHandlerLookupResponseList,
 }
 

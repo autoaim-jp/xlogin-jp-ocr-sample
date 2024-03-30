@@ -54,6 +54,12 @@ const _getActionRouter = () => {
   }))
   expressRouter.post(`${setting.browserServerSetting.getValue('apiEndpoint')}/form/upload`, uploadFileHandler)
 
+  const lookupResponseListHandler = a.action.getHandlerLookupResponseList(argNamed({
+    core: [a.core.handleInvalidSession, a.core.handleLookupResponseList, a.core.createResponse],
+  }))
+  expressRouter.get(`${setting.browserServerSetting.getValue('apiEndpoint')}/response/list`, lookupResponseListHandler)
+
+
   return expressRouter
 }
 
