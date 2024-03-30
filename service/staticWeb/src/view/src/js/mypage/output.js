@@ -41,3 +41,8 @@ export const showUploadForm = ({ splitPermissionListResult }) => {
   }
 }
 
+export const showOcrResult = ({ resultText }) => {
+  const ocrResultElm = document.querySelector('#ocrResult')
+  ocrResultElm.value = resultText
+}
+

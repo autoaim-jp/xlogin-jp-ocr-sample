@@ -18,6 +18,7 @@
         </div>
         <div class='text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700'>
           <%- include(`${componentPath}upload.ejs`)  %>
+          <%- include(`${componentPath}ocrResult.ejs`)  %>
         </div>
         </div>
       </div>
@@ -26,7 +27,7 @@
     <%- include(`${xdevkitComponentPath}tab.ejs`)  %>
     <%- include(`${xdevkitComponentPath}loading.ejs`)  %>
     <%- include(`${xdevkitComponentPath}modal.ejs`)  %>
-    <div id='hiddenForTailwindByJs' class='hidden w-full h-96 p-1'></div>
+    <div id='hiddenForTailwindByJs' class='hidden w-full h-96 h-60 p-1'></div>
   </body>
   <%- include(`${xdevkitComponentPath}includeJs.ejs`, { inlineScriptList, externalScriptList, isProduction, })  %>
 
