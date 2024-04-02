@@ -35,7 +35,6 @@ export const showUploadForm = ({ splitPermissionListResult }) => {
   const { splitPermissionList, clientId } = splitPermissionListResult.result
   if (splitPermissionList.required[`rw:${clientId}:tesseract`]) {
     document.querySelector('#uploadContainer').classList.remove('hidden')
-    document.querySelector('#uploadedImgContainer').classList.remove('hidden')
   } else {
     document.querySelector('#uploadFilePermissionRequestContainer').classList.remove('hidden')
   }
