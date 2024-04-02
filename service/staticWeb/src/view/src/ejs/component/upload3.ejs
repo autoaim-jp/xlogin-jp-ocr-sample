@@ -1,0 +1,44 @@
+<div id='uploadTabContainer' class='' x-data="imageViewer()">
+  <div id='uploadFilePermissionRequestContainer' class='flex justify-center hidden'>
+    <button data-id='xloginLoginBtn' data-permission='rw:$CLIENT_ID:tesseract' class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>XLogin</button>
+  </div>
+
+  <div id='uploadContainer' class='hidden max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mb-4'>
+    <h2 class='text-xl font-semibold mb-4'>ファイルアップロード</h2>
+    <form id='uploadProfileForm' action='#'>
+      <div class='mb-4'>
+        <label for='file' class='block text-gray-700 font-medium'>ファイルを選択してください</label>
+        <input id='profileImageInput' type='file' name='file' id='file' accept="image/*" @change="fileChosen" />
+      </div>
+      <div x-show="imageUrl">
+        <img :src="imageUrl" class="object-cover rounded border border-gray-200">
+      </div>
+      <button type='submit' class='bg-blue-500 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600'>
+        画像をテキストに変換
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function imageViewer() {
+      return {
+          imageUrl: '',
+
+          fileChosen(event) {
+              this.fileToDataUrl(event, src => this.imageUrl = src)
+            },
+
+          fileToDataUrl(event, callback) {
+              if (! event.target.files.length) return
+
+              let file = event.target.files[0],
+                reader = new FileReader()
+
+              reader.readAsDataURL(file)
+              reader.onload = e => callback(e.target.result)
+            },
+        }
+    }
+</script>
+
