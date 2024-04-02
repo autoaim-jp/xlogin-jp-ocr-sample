@@ -27,13 +27,14 @@
 
           fileChosen(event) {
               this.fileToDataUrl(event, src => this.imageUrl = src)
+              window.dispatchEvent(new CustomEvent('ace-banner', { detail: { isVisible: true, title: '[成功]', message: 'ファイルを選択しました。' }, bubbles: true }))
             },
 
           fileToDataUrl(event, callback) {
-              if (! event.target.files.length) return
+              if (!event.target.files.length) return
 
-              let file = event.target.files[0],
-                reader = new FileReader()
+              const file = event.target.files[0]
+              const reader = new FileReader()
 
               reader.readAsDataURL(file)
               reader.onload = e => callback(e.target.result)

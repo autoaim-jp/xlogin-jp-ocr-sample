@@ -21,6 +21,7 @@ export const setOnSubmitUploadForm = ({ onSubmitUploadForm }) => {
   uploadProfileFormElm.onsubmit = (e) => {
     e.preventDefault()
     onSubmitUploadForm()
+    window.dispatchEvent(new CustomEvent('ace-banner', { detail: { isVisible: true, title: '[成功]', message: 'ファイルをアップロードしました。' }, bubbles: true }))
   }
 }
 
