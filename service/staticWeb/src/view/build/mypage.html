@@ -206,11 +206,13 @@
         bannerVisible: false,
         title: '',
         message: '',
+        timeout: null,
         aceBanner($event) {
           this.bannerVisible = $event.detail.isVisible
           this.title = $event.detail.title
           this.message = $event.detail.message
-          setTimeout(() => {
+          clearTimeout(this.timeout)
+          this.timeout = setTimeout(() => {
             this.bannerVisible = false
           }, 3 * 1000)
         }

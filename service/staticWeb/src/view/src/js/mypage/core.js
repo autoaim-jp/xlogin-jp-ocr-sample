@@ -27,7 +27,7 @@ export const lookupResponse = async ({
       return
     }
 
-    if (!responseObj.result || !responseObj.result.resultText) {
+    if (!responseObj.result || responseObj.result.resultText === undefined) {
       return
     }
     updateList[requestId] = responseObj.result

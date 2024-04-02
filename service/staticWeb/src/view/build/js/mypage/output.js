@@ -44,5 +44,6 @@ export const showUploadForm = ({ splitPermissionListResult }) => {
 export const showOcrResult = ({ resultText }) => {
   const ocrResultElm = document.querySelector('#ocrResult')
   ocrResultElm.value = resultText
+  window.dispatchEvent(new CustomEvent('ace-banner', { detail: { isVisible: true, title: '[成功]', message: 'テキストの読み取りに成功しました。' }, bubbles: true }))
 }
 
