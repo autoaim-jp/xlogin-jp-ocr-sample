@@ -30,44 +30,237 @@
 
   <body class='flex flex-col'>
 
-        <nav class='w-full z-30 top-0 py-1'>
-      <div class='max-w-3xl container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 py-2'>
+    <header class="bg-white" x-data="{ 
+               slideOverOpen: false 
+               }">
+  <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 items-center justify-between">
+      <div class="flex-1 md:flex md:items-center md:gap-12">
+        <a class="block text-teal-600" href="#">
+          <span class="sr-only">Home</span>
+          <img class='inline-block align-bottom' src='/img/xlogin_jp_ocr_sample_logo.png' width='128px' height='72px'>
+        </a>
+      </div>
 
-        <div class='pl-4 flex items-center'>
-          <a class='font-bold text-2xl' href='/'>
-            <img class='inline-block align-bottom' src='/img/xlogin_jp_ocr_sample_logo.png' width='128px' height='72px'>
-            <div class='inline-block ml-2'>
-              <span>ocr-sample.xlogin.jp</span>
-              <br />
-              <span class='text-sm'>simple ocr client</span>
-            </div>
-          </a>
-        </div>
+      <div class="md:flex md:items-center md:gap-12">
+        <nav aria-label="Global" class="hidden md:block">
+          <ul class="flex items-center gap-6 text-sm">
+            <li>
+              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> About </a>
+            </li>
 
-        <div class='pl-4 flex items-center z-40'>
-          <div class='block xl:hidden pr-4'>
-            <button id='commonNavToggle' class='flex items-center px-3 py-2 rounded appearance-none bg-white focus:outline-none'>
-              <svg viewBox='0 0 100 80' width='40' height='70'>
-                <rect width='100' height='20'></rect>
-                <rect y='30' width='100' height='20'></rect>
-                <rect y='60' width='100' height='20'></rect>
-                <text x='50%' y='90' text-anchor='middle' dominant-baseline='central' font-family='Meiryo' font-size='30'>Menu</text>
+            <li>
+              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> Careers </a>
+            </li>
+
+            <li>
+              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> History </a>
+            </li>
+
+            <li>
+              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> Services </a>
+            </li>
+
+            <li>
+              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> Projects </a>
+            </li>
+
+            <li>
+              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> Blog </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="flex items-center gap-4">
+          <div class="block">
+            <button class="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75" @click="slideOverOpen=true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
           </div>
         </div>
-
-        <div class='xl:relative absolute w-full left-0 xl:top-auto top-24 flex items-center grid xl:w-auto'>
-          <div class='xl:flex xl:items-center xl:w-auto xl:block mt-2 xl:mt-0 p-1 xl:p-0 z-20 bg-gray-100 border-2 xl:bg-transparent xl:border-0 rounded hidden' id='commonNavContent'>
-            <ul class='lg:flex justify-end flex-1 xl:flex-row flex-col items-center text-center text-xl'>
-              <li class='xl:m-0 mr-3 mt-2 w-full border-b-2 border-white'><a data-id='notificationBtn' class='inline-block py-2 px-4 font-bold no-underline' href='#'>Notification</a></li>
-              <li class='xl:m-0 mr-3 mt-2 w-full border-b-2 border-white'><a class='inline-block py-2 px-4 font-bold no-underline' href='https://github.com/autoaim-jp/xlogin-jp-ocr-sample' target='_blank'>GitHub</a></li>
-            </ul>
-          </div>
-        </div>
-
       </div>
-    </nav>
+    </div>
+  </div>
+      <template x-teleport="body">
+          <div 
+                x-show="slideOverOpen"
+                @keydown.window.escape="slideOverOpen=false"
+                class="relative z-[99]">
+              <div x-show="slideOverOpen" x-transition.opacity.duration.600ms @click="slideOverOpen = false" class="fixed inset-0 bg-black bg-opacity-10"></div>
+              <div class="fixed inset-0 overflow-hidden">
+                  <div class="absolute inset-0 overflow-hidden">
+                      <div class="fixed inset-y-0 right-0 flex max-w-full pl-10">
+                          <div 
+                           x-show="slideOverOpen" 
+                           @click.away="slideOverOpen = false"
+                           x-transition:enter="transform transition ease-in-out duration-500 sm:duration-700" 
+                           x-transition:enter-start="translate-x-full" 
+                           x-transition:enter-end="translate-x-0" 
+                           x-transition:leave="transform transition ease-in-out duration-500 sm:duration-700" 
+                           x-transition:leave-start="translate-x-0" 
+                           x-transition:leave-end="translate-x-full" 
+                           class="w-screen max-w-md">
+                              <div class="flex flex-col h-full py-5 overflow-y-scroll bg-white border-l shadow-lg border-neutral-100/70">
+                                  <div class="px-4 sm:px-5">
+                                      <div class="flex items-start justify-between pb-1">
+                                          <h2 class="text-base font-semibold leading-6 text-gray-900" id="slide-over-title">Slide Over Title</h2>
+                                          <div class="flex items-center h-auto ml-3">
+                                              <button @click="slideOverOpen=false" class="absolute top-0 right-0 z-30 flex items-center justify-center px-3 py-2 mt-4 mr-5 space-x-1 text-xs font-medium uppercase border rounded-md border-neutral-200 text-neutral-600 hover:bg-neutral-100">
+                                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                                  <span>Close</span>
+                                              </button>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="relative flex-1 px-4 mt-5 sm:px-5">
+                                      <div class="absolute inset-0 px-4 sm:px-5">
+                                          <div class="relative h-full overflow-hidden border border-dashed rounded-md border-neutral-300">
+
+    <ul>
+  <li>
+    <a
+      href="#"
+      class="flex items-center gap-2 border-s-[3px] border-blue-500 bg-blue-50 px-4 py-3 text-blue-700"
+      >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="size-5 opacity-75"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+        >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+          />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+
+        <span class="text-sm font-medium"> General </span>
+    </a>
+  </li>
+
+  <li>
+    <a
+      href="#"
+      class="flex items-center gap-2 border-s-[3px] border-transparent px-4 py-3 text-gray-500 hover:border-gray-100 hover:bg-gray-50 hover:text-gray-700"
+      >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="size-5 opacity-75"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+        >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+          />
+      </svg>
+
+        <span class="text-sm font-medium"> Teams </span>
+    </a>
+  </li>
+
+  <li>
+    <a
+      href="#"
+      class="flex items-center gap-2 border-s-[3px] border-transparent px-4 py-3 text-gray-500 hover:border-gray-100 hover:bg-gray-50 hover:text-gray-700"
+      >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="size-5 opacity-75"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+        >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+          />
+      </svg>
+
+        <span class="text-sm font-medium"> Billing </span>
+    </a>
+  </li>
+
+  <li>
+    <a
+      href="#"
+      class="flex items-center gap-2 border-s-[3px] border-transparent px-4 py-3 text-gray-500 hover:border-gray-100 hover:bg-gray-50 hover:text-gray-700"
+      >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="size-5 opacity-75"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+        >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+          />
+      </svg>
+
+        <span class="text-sm font-medium"> Invoices </span>
+    </a>
+  </li>
+
+  <li>
+    <a
+      href="#"
+      class="flex items-center gap-2 border-s-[3px] border-transparent px-4 py-3 text-gray-500 hover:border-gray-100 hover:bg-gray-50 hover:text-gray-700"
+      >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="size-5 opacity-75"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+        >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+          />
+      </svg>
+
+        <span class="text-sm font-medium"> Account </span>
+    </a>
+  </li>
+</ul> 
+
+
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </template>
+</header>
+
 
 
     <!-- https://tailwindcomponents.com/component/simple-notification -->
