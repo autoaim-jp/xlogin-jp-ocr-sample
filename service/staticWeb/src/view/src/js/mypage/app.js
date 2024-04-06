@@ -53,24 +53,12 @@ const startResponseLoader = async () => {
   }, 2 * 1000)
 }
 
-
-const loadPermission = async () => {
-  const splitPermissionListResult = await a.lib.common.input.fetchSplitPermissionList(a.setting.browserServerSetting.getValue('apiEndpoint'))
-  a.output.showUploadForm(argNamed({
-    param: { splitPermissionListResult },
-  }))
-
-  a.lib.xdevkit.output.reloadXloginLoginBtn(splitPermissionListResult?.result?.clientId)
-}
-
 const main = async () => {
   a.lib.xdevkit.output.switchLoading(true)
   // a.lib.common.output.setOnClickNavManu()
   a.lib.monkeyPatch()
 
   a.app.loadUploadForm()
-
-  a.app.loadPermission()
 
   a.app.startResponseLoader()
   setTimeout(() => {
@@ -81,7 +69,6 @@ const main = async () => {
 a.app = {
   main,
   loadUploadForm,
-  loadPermission,
   startResponseLoader,
 }
 

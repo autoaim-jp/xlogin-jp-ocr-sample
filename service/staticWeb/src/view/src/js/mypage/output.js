@@ -32,15 +32,6 @@ export const showMessage = ({ messageResult }) => {
   document.querySelector('#messageContent').value = messageResult.result.jsonContent
 }
 
-export const showUploadForm = ({ splitPermissionListResult }) => {
-  const { splitPermissionList, clientId } = splitPermissionListResult.result
-  if (splitPermissionList.required[`rw:${clientId}:tesseract`]) {
-    document.querySelector('#uploadContainer').classList.remove('hidden')
-  } else {
-    document.querySelector('#uploadFilePermissionRequestContainer').classList.remove('hidden')
-  }
-}
-
 export const showOcrResult = ({ resultText }) => {
   const ocrResultElm = document.querySelector('#ocrResult')
   ocrResultElm.value = resultText

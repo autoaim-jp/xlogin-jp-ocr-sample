@@ -1,9 +1,9 @@
-<div id='uploadTabContainer' class='' x-data="imageViewer()">
-  <div id='uploadFilePermissionRequestContainer' class='flex justify-center hidden'>
-    <button data-id='xloginLoginBtn' data-permission='rw:$CLIENT_ID:tesseract' class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>XLogin</button>
+<div id='uploadTabContainer' class='' x-data="imageViewer()" x-init="checkOcrPermission()">
+  <div x-show="!hasOcrPermission" class='flex justify-center'>
+    <button @click="loginWithOcrPermission" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>XLogin</button>
   </div>
 
-  <div id='uploadContainer' class='hidden max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mb-4'>
+  <div x-show="hasOcrPermission" class='max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mb-4'>
     <h2 class='text-xl font-semibold mb-4'>ファイルアップロード</h2>
     <form id='uploadProfileForm' action='#'>
       <div class='mb-4'>
@@ -17,6 +17,7 @@
         画像をテキストに変換
       </button>
     </form>
+  <%- include(`${componentPath}ocrResult.ejs`)  %>
   </div>
 </div>
 
@@ -24,6 +25,11 @@
   function imageViewer() {
       return {
           imageUrl: '',
+          hasOcrPermission: false,
+          authActionHref: '/f/xlogin/connect?redirectAfterAuth=/mypage',
+          loginWithOcrPermission() {
+              window.location.href = this.authActionHref
+            },
 
           fileChosen(event) {
               this.fileToDataUrl(event, src => this.imageUrl = src)
@@ -38,6 +44,23 @@
 
               reader.readAsDataURL(file)
               reader.onload = e => callback(e.target.result)
+            },
+          async checkOcrPermission () {
+              const splitPermissionListResult = await a.lib.common.input.fetchSplitPermissionList(a.setting.browserServerSetting.getValue('apiEndpoint'))
+              if (!splitPermissionListResult.result) {
+                  this.hasOcrPermission = false
+                  return
+                }
+              const { splitPermissionList, clientId } = splitPermissionListResult.result
+              const permission = 'rw:$CLIENT_ID:tesseract' 
+              const queryPart = `&requestScope=${permission.replace(/\$CLIENT_ID/g, clientId)}`
+              this.authActionHref = `/f/xlogin/connect?redirectAfterAuth=/mypage${queryPart}`
+
+              if (splitPermissionList.optional[`rw:${clientId}:tesseract`]) {
+                  this.hasOcrPermission = true
+                } else {
+                    this.hasOcrPermission = false
+                  }
             },
         }
     }

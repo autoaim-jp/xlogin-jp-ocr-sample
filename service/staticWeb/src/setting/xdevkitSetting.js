@@ -14,7 +14,7 @@ setting.api.STATE_L = 64
 setting.api.CODE_VERIFIER_L = 64
 setting.api.XLOGIN_RESPONSE_TYPE = 'code'
 setting.api.XLOGIN_CODE_CHALLENGE_METHOD = 'S256'
-setting.api.SCOPE = '*r:$CLIENT_ID:serviceUserId,*rw:$CLIENT_ID:tesseract'
+setting.api.SCOPE = '*r:$CLIENT_ID:serviceUserId,rw:$CLIENT_ID:tesseract'
 
 setting.url = {}
 setting.url.ERROR_PAGE = '/error'
