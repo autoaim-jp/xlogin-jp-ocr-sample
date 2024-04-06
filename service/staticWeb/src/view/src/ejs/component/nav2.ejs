@@ -12,32 +12,33 @@
         <nav aria-label="Global" class="hidden md:block">
           <ul class="flex items-center gap-6 text-sm"
               x-data="{
-                        navLoginUrl: '/f/xlogin/connect?redirectAfterAuth=/mypage',
-                        isLogin: false,
+                        authActionHref: null,
+                        authActionLabel: null,
                         checkLoginStatus: async function () {
                           const splitPermissionListResult = await a.lib.common.input.fetchSplitPermissionList(a.setting.browserServerSetting.getValue('apiEndpoint'))
                           if (splitPermissionListResult?.result?.clientId) {
-                            this.isLogin = true
+                            this.authActionLabel = 'ログアウト'
+                            this.authActionHref = '/f/logout'
                           } else {
                             this.isLogin = false
+                            this.authActionLabel = 'ログイン'
+                            this.authActionHref = '/f/xlogin/connect?redirectAfterAuth=/mypage'
                           }
                         }
                       }"
               x-init="checkLoginStatus()"
               >
+
+              <li>
+                <a class="text-gray-500 transition hover:text-gray-500/75" x-bind:href="authActionHref" x-cloak x-text="authActionLabel"></a>
+              </li>
+
               <li>
                 <a class="text-gray-500 transition hover:text-gray-500/75" href="#">GitHub</a>
               </li>
 
               <li>
                 <a class="text-gray-500 transition hover:text-gray-500/75" href="#">通知</a>
-              </li>
-
-              <li x-show="isLogin">
-                <a class="text-gray-500 transition hover:text-gray-500/75" href="#">ログアウト</a>
-              </li>
-              <li x-show="!isLogin">
-                <a class="text-gray-500 transition hover:text-gray-500/75" x-bind:href="navLoginUrl">ログイン</a>
               </li>
 
               <li>
