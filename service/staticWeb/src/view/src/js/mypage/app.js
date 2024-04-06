@@ -86,4 +86,5 @@ a.app = {
 }
 
 a.app.main()
+window.a = a
 

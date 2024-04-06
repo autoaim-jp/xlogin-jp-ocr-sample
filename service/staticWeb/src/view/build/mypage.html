@@ -42,18 +42,39 @@
 
       <div class="md:flex md:items-center md:gap-12">
         <nav aria-label="Global" class="hidden md:block">
-          <ul class="flex items-center gap-6 text-sm">
-            <li>
-              <a class="text-gray-500 transition hover:text-gray-500/75" href="#">GitHub</a>
-            </li>
+          <ul class="flex items-center gap-6 text-sm"
+              x-data="{
+                        navLoginUrl: '/f/xlogin/connect?redirectAfterAuth=/mypage',
+                        isLogin: false,
+                        checkLoginStatus: async function () {
+                          const splitPermissionListResult = await a.lib.common.input.fetchSplitPermissionList(a.setting.browserServerSetting.getValue('apiEndpoint'))
+                          if (splitPermissionListResult?.result?.clientId) {
+                            this.isLogin = true
+                          } else {
+                            this.isLogin = false
+                          }
+                        }
+                      }"
+              x-init="checkLoginStatus()"
+              >
+              <li>
+                <a class="text-gray-500 transition hover:text-gray-500/75" href="#">GitHub</a>
+              </li>
 
-            <li>
-              <a class="text-gray-500 transition hover:text-gray-500/75" href="#">通知</a>
-            </li>
+              <li>
+                <a class="text-gray-500 transition hover:text-gray-500/75" href="#">通知</a>
+              </li>
 
-            <li>
-              <a class="text-gray-500 transition hover:text-gray-500/75" href="#">アカウント</a>
-            </li>
+              <li x-show="isLogin">
+                <a class="text-gray-500 transition hover:text-gray-500/75" href="#">ログアウト</a>
+              </li>
+              <li x-show="!isLogin">
+                <a class="text-gray-500 transition hover:text-gray-500/75" x-bind:href="navLoginUrl">ログイン</a>
+              </li>
+
+              <li>
+                <a class="text-gray-500 transition hover:text-gray-500/75" href="#">アカウント</a>
+              </li>
           </ul>
         </nav>
 
@@ -67,7 +88,7 @@
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 stroke-width="2"
-              >
+                >
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
@@ -76,7 +97,7 @@
       </div>
     </div>
   </div>
-      </header>
+</header>
 
 
     <template x-teleport="body"  x-data="{ 
@@ -119,8 +140,18 @@
                                           <div class="relative h-full overflow-hidden">
     <ul class="my-2 divide-solid divide-y divide-gray-100"
     x-data="{
-            isLogin: false
-             }"
+              sidemenuLoginUrl: '/f/xlogin/connect?redirectAfterAuth=/mypage',
+              isLogin: false,
+              checkLoginStatus: async function () {
+                const splitPermissionListResult = await a.lib.common.input.fetchSplitPermissionList(a.setting.browserServerSetting.getValue('apiEndpoint'))
+                if (splitPermissionListResult?.result?.clientId) {
+                  this.isLogin = true
+                } else {
+                  this.isLogin = false
+                }
+              }
+            }"
+    x-init="checkLoginStatus()"
   >
   <li class="py-2">
     <ul class="space-y-1">
@@ -145,16 +176,6 @@
         </a>
       </li>
 
-      <li x-show="!isLogin">
-        <a
-          href="#"
-          class="flex items-center gap-2 border-s-[3px] border-transparent px-4 py-3 text-gray-500 hover:border-gray-100 hover:bg-gray-50 hover:text-gray-700"
-          >
-          <svg class="size-5 opacity-75" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13 12L21 12" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M16 15L13.087 12.087V12.087C13.039 12.039 13.039 11.961 13.087 11.913V11.913L16 9" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M16 5V4.5V4.5C16 3.67157 15.3284 3 14.5 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H14.5C15.3284 21 16 20.3284 16 19.5V19.5V19" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-            <span class="text-sm font-medium">ログイン</span>
-        </a>
-      </li>
-
       <li x-show="isLogin">
         <a
           href="#"
@@ -162,6 +183,16 @@
           >
           <svg class="size-5 opacity-75" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M21 12L13 12" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M18 15L20.913 12.087V12.087C20.961 12.039 20.961 11.961 20.913 11.913V11.913L18 9" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M16 5V4.5V4.5C16 3.67157 15.3284 3 14.5 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H14.5C15.3284 21 16 20.3284 16 19.5V19.5V19" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
             <span class="text-sm font-medium">ログアウト</span>
+        </a>
+      </li>
+
+      <li x-show="!isLogin">
+        <a
+          x-bind:href="sidemenuLoginUrl"
+          class="flex items-center gap-2 border-s-[3px] border-transparent px-4 py-3 text-gray-500 hover:border-gray-100 hover:bg-gray-50 hover:text-gray-700"
+          >
+          <svg class="size-5 opacity-75" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13 12L21 12" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M16 15L13.087 12.087V12.087C13.039 12.039 13.039 11.961 13.087 11.913V11.913L16 9" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M16 5V4.5V4.5C16 3.67157 15.3284 3 14.5 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H14.5C15.3284 21 16 20.3284 16 19.5V19.5V19" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+            <span class="text-sm font-medium">ログイン</span>
         </a>
       </li>
 

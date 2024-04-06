@@ -10,18 +10,39 @@
 
       <div class="md:flex md:items-center md:gap-12">
         <nav aria-label="Global" class="hidden md:block">
-          <ul class="flex items-center gap-6 text-sm">
-            <li>
-              <a class="text-gray-500 transition hover:text-gray-500/75" href="#">GitHub</a>
-            </li>
+          <ul class="flex items-center gap-6 text-sm"
+              x-data="{
+                        navLoginUrl: '/f/xlogin/connect?redirectAfterAuth=/mypage',
+                        isLogin: false,
+                        checkLoginStatus: async function () {
+                          const splitPermissionListResult = await a.lib.common.input.fetchSplitPermissionList(a.setting.browserServerSetting.getValue('apiEndpoint'))
+                          if (splitPermissionListResult?.result?.clientId) {
+                            this.isLogin = true
+                          } else {
+                            this.isLogin = false
+                          }
+                        }
+                      }"
+              x-init="checkLoginStatus()"
+              >
+              <li>
+                <a class="text-gray-500 transition hover:text-gray-500/75" href="#">GitHub</a>
+              </li>
 
-            <li>
-              <a class="text-gray-500 transition hover:text-gray-500/75" href="#">通知</a>
-            </li>
+              <li>
+                <a class="text-gray-500 transition hover:text-gray-500/75" href="#">通知</a>
+              </li>
 
-            <li>
-              <a class="text-gray-500 transition hover:text-gray-500/75" href="#">アカウント</a>
-            </li>
+              <li x-show="isLogin">
+                <a class="text-gray-500 transition hover:text-gray-500/75" href="#">ログアウト</a>
+              </li>
+              <li x-show="!isLogin">
+                <a class="text-gray-500 transition hover:text-gray-500/75" x-bind:href="navLoginUrl">ログイン</a>
+              </li>
+
+              <li>
+                <a class="text-gray-500 transition hover:text-gray-500/75" href="#">アカウント</a>
+              </li>
           </ul>
         </nav>
 
@@ -35,7 +56,7 @@
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 stroke-width="2"
-              >
+                >
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
@@ -44,5 +65,5 @@
       </div>
     </div>
   </div>
-      </header>
+</header>
 
