@@ -354,7 +354,7 @@
         画像をテキストに変換
       </button>
     </form>
-  <div>
+    <div>
   <label for='ocrResult' class='block text-sm font-medium text-gray-700'>結果</label>
 
   <textarea
@@ -414,6 +414,12 @@
     }
 </script>
 
+<style>
+  .test {
+    width: 100px;
+    height:1 00px;
+  }
+</style>
 
         </div>
         </div>
@@ -447,7 +453,7 @@
     <div class="flex items-center justify-between w-full h-full px-3 mx-auto max-w-7xl ">
         <a href="#" class="flex flex-col w-full h-full text-xs leading-6 text-white duration-150 ease-out sm:flex-row sm:items-center opacity-80 hover:opacity-100">
             <span class="flex items-center">
-                <strong class="font-semibold" x-text="title"></strong><span class="hidden w-px h-4 mx-3 rounded-full sm:block bg-neutral-700"></span>
+                <strong class="font-semibold" x-text="title" x-cloak>エラーが発生しました。</strong><span class="hidden w-px h-4 mx-3 rounded-full sm:block bg-neutral-700"></span>
             </span>
             <span class="block pt-1 pb-2 leading-none sm:inline sm:pt-0 sm:pb-0" x-text="message"></span>
         </a>
@@ -494,9 +500,6 @@
       
       
       <script type='module' src='/js/mypage/app.js'></script> 
-    
-      
-      <script type='module' src='https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js'></script> 
     
 
     

@@ -1,6 +1,7 @@
 /* mypage/app.js */
 import setting from '../_setting/index.js'
 import * as lib from '../_lib/index.js'
+import * as _aline from '../_lib/_alpinejs/dist/cdn.min.js'
 
 import * as core from './core.js'
 import * as input from './input.js'
