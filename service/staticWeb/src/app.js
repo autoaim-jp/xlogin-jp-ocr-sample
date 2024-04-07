@@ -33,7 +33,7 @@ const _getOtherRouter = () => {
     expressRouter.use(helmet({
       contentSecurityPolicy: {
         directives: {
-          'script-src': ['\'self\'', '\'unsafe-eval\'', '\'unsafe-inline\'', 'cdn.jsdelivr.net'],
+          'script-src': ['\'self\'', '\'unsafe-eval\'', '\'unsafe-inline\''],
         },
       },
     }))
