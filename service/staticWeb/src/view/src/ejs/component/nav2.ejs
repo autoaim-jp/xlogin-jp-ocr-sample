@@ -11,22 +11,8 @@
       <div class="md:flex md:items-center md:gap-12">
         <nav aria-label="Global" class="hidden md:block">
           <ul class="flex items-center gap-6 text-sm"
-              x-data="{
-                        authActionHref: null,
-                        authActionLabel: null,
-                        checkLoginStatus: async function () {
-                          const splitPermissionListResult = await a.lib.common.input.fetchSplitPermissionList(a.setting.browserServerSetting.getValue('apiEndpoint'))
-                          if (splitPermissionListResult?.result?.clientId) {
-                            this.authActionLabel = 'ログアウト'
-                            this.authActionHref = '/f/logout'
-                          } else {
-                            this.isLogin = false
-                            this.authActionLabel = 'ログイン'
-                            this.authActionHref = '/f/xlogin/connect?redirectAfterAuth=/mypage'
-                          }
-                        }
-                      }"
-              x-init="checkLoginStatus()"
+              x-data="nav2"
+              x-init="initNav2()"
               >
 
               <li>
@@ -68,3 +54,40 @@
   </div>
 </header>
 
+<script>
+function nav2() {
+  const awaitSleep = (ms) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve()
+      }, ms)
+    })
+  }
+
+  return {
+    authActionHref: null,
+    authActionLabel: null,
+
+
+    async initNav2 () {
+      await this.checkLoginStatus()
+
+      window.dispatchEvent(new CustomEvent('ace-init', { detail: { from: 'nav2.ejs' } }))
+    },
+
+    async checkLoginStatus () {
+      console.log('debug delay @nav2.ejs')
+      await awaitSleep(2000)
+      const splitPermissionListResult = await a.lib.common.input.fetchSplitPermissionList(a.setting.browserServerSetting.getValue('apiEndpoint'))
+      if (splitPermissionListResult?.result?.clientId) {
+        this.authActionLabel = 'ログアウト'
+        this.authActionHref = '/f/logout'
+      } else {
+        this.isLogin = false
+        this.authActionLabel = 'ログイン'
+        this.authActionHref = '/f/xlogin/connect?redirectAfterAuth=/mypage'
+      }
+    }
+  }
+}
+</script>
