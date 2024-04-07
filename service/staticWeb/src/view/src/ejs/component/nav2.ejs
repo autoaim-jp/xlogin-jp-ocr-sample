@@ -76,8 +76,8 @@ function nav2() {
     },
 
     async checkLoginStatus () {
-      console.log('debug delay @nav2.ejs')
-      await awaitSleep(2000)
+      // console.log('debug delay @nav2.ejs')
+      // await awaitSleep(2000)
       const splitPermissionListResult = await a.lib.common.input.fetchSplitPermissionList(a.setting.browserServerSetting.getValue('apiEndpoint'))
       if (splitPermissionListResult?.result?.clientId) {
         this.authActionLabel = 'ログアウト'
