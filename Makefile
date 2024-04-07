@@ -1,6 +1,6 @@
 include setting.conf
 SHELL=/bin/bash
-PHONY=default app-rebuild app-build app-up app-up-d app-down test-build test-up test-down view-build view-compile view-compile-minify view-watch init lint lint-fix init-doc doc-rebuild doc-generate doc-publish clean yarn-add container-ls help
+PHONY=default app-rebuild app-build app-up app-up-d app-down test-build test-up test-down view-build view-compile view-compile-minify view-watch init lint lint-fix lint-build init-doc doc-rebuild doc-generate doc-publish clean yarn-add container-ls help
 
 .PHONY: $(PHONY)
 
@@ -25,6 +25,7 @@ init: init-xdevkit
 
 lint: docker-compose-up-lint
 lint-fix: docker-compose-up-lint-fix
+lint-build: docker-compose-build-lint
 
 init-doc: init-doc-deploy-key
 doc-rebuild: docker-compose-rebuild-doc
@@ -40,7 +41,7 @@ help:
 	@echo "Usage: make (app|test)-(rebuild|build|up|down)"
 	@echo "Usage: make view-(build|compile|compile-minify|watch)"
 	@echo "Usage: make doc-(rebuild|generate|publish)"
-	@echo "Usage: make (init|lint|lint-fix|clean)"
+	@echo "Usage: make (init|lint|lint-fix|lint-build|clean)"
 	@echo "Example:"
 	@echo "  make app-rebuild           # Recreate image"
 	@echo "  make app-build             # Create image"
@@ -122,6 +123,8 @@ docker-compose-up-lint:
 	SERVICE_PATH=../../../../service docker compose -p ${DOCKER_PROJECT_NAME}-lint -f ./xdevkit/standalone/xdevkit-eslint/docker/docker-compose.eslint.yml up --abort-on-container-exit
 docker-compose-up-lint-fix:
 	SERVICE_PATH=../../../../service FIX_OPTION="--fix" docker compose -p ${DOCKER_PROJECT_NAME}-lint -f ./xdevkit/standalone/xdevkit-eslint/docker/docker-compose.eslint.yml up --abort-on-container-exit
+docker-compose-build-lint:
+	SERVICE_PATH=../../../../service docker compose -p ${DOCKER_PROJECT_NAME}-lint -f ./xdevkit/standalone/xdevkit-eslint/docker/docker-compose.eslint.yml build
 
 init-doc-deploy-key:
 	mkdir -p ./secret/

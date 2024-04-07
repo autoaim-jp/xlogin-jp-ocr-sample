@@ -1,7 +1,6 @@
 /* mypage/app.js */
 import setting from '../_setting/index.js'
 import * as lib from '../_lib/index.js'
-import * as _alpine from '../_lib/_alpinejs/dist/cdn.min.js'
 
 import * as core from './core.js'
 import * as input from './input.js'
@@ -25,7 +24,7 @@ const main = async () => {
 
   const WAIT_FOR_LIST = ['upload3.ejs', 'nav-sidemenu-list.ejs', 'nav2.ejs']
   const waitMap = {}
-  WAIT_FOR_LIST.map((component) => {
+  WAIT_FOR_LIST.forEach((component) => {
     waitMap[component] = false
   })
 
@@ -44,5 +43,4 @@ a.app = {
 
 a.app.main()
 window.a = a
-
 
