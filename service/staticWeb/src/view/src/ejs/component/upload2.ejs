@@ -1,0 +1,48 @@
+<!-- https://vemto.app/blog/how-to-create-an-image-upload-viewer-with-alpinejs -->
+<div x-data="imageViewer()">
+  <form id='uploadProfileForm' action='#'>
+    <div class="mb-2">
+      <template x-if="imageUrl">
+        <img :src="imageUrl" 
+                class="object-cover rounded border border-gray-200" 
+                style="width: 100px; height: 100px;"
+                >
+      </template>
+
+        <template x-if="!imageUrl">
+          <div 
+                  class="border rounded border-gray-200 bg-gray-100" 
+                  style="width: 100px; height: 100px;"
+                  ></div>
+        </template>
+
+        <input class="mt-2" type="file" name="file" accept="image/*" @change="fileChosen" />
+        <button type='submit' class='bg-blue-500 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600'>
+          画像をテキストに変換
+        </button>
+
+    </div>
+  </form>
+</div>
+
+<script>
+  function imageViewer() {
+      return {
+          imageUrl: '',
+
+          fileChosen(event) {
+              this.fileToDataUrl(event, src => this.imageUrl = src)
+            },
+
+          fileToDataUrl(event, callback) {
+              if (! event.target.files.length) return
+
+              let file = event.target.files[0],
+                reader = new FileReader()
+
+              reader.readAsDataURL(file)
+              reader.onload = e => callback(e.target.result)
+            },
+        }
+    }
+</script>

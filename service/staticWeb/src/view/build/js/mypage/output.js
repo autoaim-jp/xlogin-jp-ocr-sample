@@ -21,6 +21,7 @@ export const setOnSubmitUploadForm = ({ onSubmitUploadForm }) => {
   uploadProfileFormElm.onsubmit = (e) => {
     e.preventDefault()
     onSubmitUploadForm()
+    window.dispatchEvent(new CustomEvent('ace-banner', { detail: { isVisible: true, title: '[成功]', message: 'ファイルをアップロードしました。' }, bubbles: true }))
   }
 }
 
@@ -31,18 +32,9 @@ export const showMessage = ({ messageResult }) => {
   document.querySelector('#messageContent').value = messageResult.result.jsonContent
 }
 
-export const showUploadForm = ({ splitPermissionListResult }) => {
-  const { splitPermissionList, clientId } = splitPermissionListResult.result
-  if (splitPermissionList.required[`rw:${clientId}:tesseract`]) {
-    document.querySelector('#uploadContainer').classList.remove('hidden')
-    document.querySelector('#uploadedImgContainer').classList.remove('hidden')
-  } else {
-    document.querySelector('#uploadFilePermissionRequestContainer').classList.remove('hidden')
-  }
-}
-
 export const showOcrResult = ({ resultText }) => {
   const ocrResultElm = document.querySelector('#ocrResult')
   ocrResultElm.value = resultText
+  window.dispatchEvent(new CustomEvent('ace-banner', { detail: { isVisible: true, title: '[成功]', message: 'テキストの読み取りに成功しました。' }, bubbles: true }))
 }
 
